@@ -39,3 +39,7 @@ CLAW.local.md
 
 # Documentation
 docs/
+
+*.log
+*.sqlite
+*.db
