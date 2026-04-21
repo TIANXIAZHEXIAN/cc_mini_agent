@@ -1,0 +1,24 @@
+{
+  "mcp_servers": [
+    {
+      "name": "bocha_search",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/yuan/bocha-search-mcp",
+        "run",
+        "bocha-search-mcp"
+      ],
+      "env": {
+        "BOCHA_API_KEY": "你的实际博查API密钥"
+      }
+    },
+    {
+      "name": "amap_maps",
+      "command": "bunx",
+      "args": [
+        "@amap/amap-maps-mcp-server"
+      ]
+    }
+  ]
+}
