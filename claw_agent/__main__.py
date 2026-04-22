@@ -147,7 +147,13 @@ async def repl():
     mcp_manager = None
     if config.feature("MCP") and config.mcp_servers:
         mcp_manager = MCPManager()
-        servers = [MCPServerConfig(**s) for s in config.mcp_servers]
+        
+        # 遍历字典，将 key 作为 name 注入到配置中
+        servers = []
+        for name, s_config in config.mcp_servers.items():
+            # 假设 MCPServerConfig 依然需要 name 字段
+            servers.append(MCPServerConfig(name=name, **s_config))
+            
         await mcp_manager.connect_all(servers)
 
         # --- P0 fix: inject MCP server instructions into system prompt ---

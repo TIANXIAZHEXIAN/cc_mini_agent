@@ -50,8 +50,12 @@ class Config:
     })
 
     # --- MCP servers ---
-    mcp_servers: list = field(default_factory=list)
-    # Format: [{"name": "xxx", "command": "node", "args": ["/path/to/server.js"]}]
+    # mcp_servers: list = field(default_factory=list)
+    # # Format: [{"name": "xxx", "command": "node", "args": ["/path/to/server.js"]}]
+
+    # 将 list 改为 dict
+    mcp_servers: dict = field(default_factory=dict)
+    # 格式: {"server_name": {"command": "node", "args": ["/path/to/server.js"]}}
 
     # --- System prompt ---
     system_prompt: Optional[str] = None  # Custom override
@@ -65,16 +69,21 @@ class Config:
     )  # e.g. "japanese", "chinese", "spanish"
 
     def load_mcp_from_file(self, file_path: str):
-        """从 JSON 文件加载 MCP 服务器配置"""
+        """从 JSON 文件加载 MCP 服务器配置 (字典格式)"""
         if not os.path.exists(file_path):
             return
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                # 假设 JSON 格式为 {"mcp_servers": [...]}
-                if "mcp_servers" in data:
-                    self.mcp_servers.extend(data["mcp_servers"])
+                # 兼容 "mcpServers" (主流标准) 和 "mcp_servers" 
+                servers_dict = data.get("mcpServers") or data.get("mcp_servers") or {}
+                
+                if isinstance(servers_dict, dict):
+                    # 使用 update 方便未来支持多配置文件合并
+                    self.mcp_servers.update(servers_dict)
+                else:
+                    print(f"配置文件格式错误: 期望的 mcpServers 是对象(dict)，但得到的是 {type(servers_dict)}")
         except Exception as e:
             print(f"加载配置文件失败: {e}")
 
