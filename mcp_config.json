@@ -14,6 +14,12 @@
       "args": [
         "@amap/amap-maps-mcp-server"
       ]
+    },
+    "github-mcp": {
+      "command": "bunx",
+      "args": [
+        "@modelcontextprotocol/server-github"
+      ]
     }
   }
 }

@@ -93,7 +93,7 @@ PROTECTED_PATHS = {
     ".bashrc", ".zshrc", ".bash_profile", ".profile",
     ".gitconfig", ".ssh/", ".gnupg/",
     ".env", ".env.local", ".env.production",
-    ".mcp.json",
+    ".mcp.json","mcp_config.json",
     "credentials.json", "service-account.json",
 }
 

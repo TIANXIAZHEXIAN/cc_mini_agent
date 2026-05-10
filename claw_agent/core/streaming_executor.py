@@ -10,6 +10,16 @@ Design:
   - Safe: all tools run via asyncio.gather with exception isolation
   - Ordered: results are returned in the original tool_call order
   - Hook-aware: PRE/POST hooks run for each tool, just like sequential mode
+
+当大语言模型批量返回多个工具调用时，并行执行它们。
+
+生产级智能体系统通常在流式接收LLM响应的同时就开始执行工具；
+我们的简化版本在响应完全接收后才并行执行所有工具调用——相比顺序执行仍有显著加速。
+
+设计原则：
+  - 安全：所有工具通过 asyncio.gather 运行，具有异常隔离
+  - 有序：结果按原始 tool_call 的顺序返回
+  - 支持Hook：为每个工具运行 PRE/POST 钩子，与顺序模式一致
 """
 from __future__ import annotations
 import asyncio
@@ -43,6 +53,17 @@ async def execute_tools_parallel(
 
     Returns list of (tool_call, tool_result, events) tuples in original order.
     Each `events` list contains dicts the Engine should yield to the caller.
+
+    并发执行工具调用，并有序返回结果。
+
+    对于每个工具调用，依次执行：
+      1. PRE_TOOL_USE 钩子 (可能阻塞执行)
+      2. 权限检查
+      3. tool.call() 实际调用工具
+      4. POST_TOOL_USE / POST_TOOL_FAILURE 钩子
+
+    返回一个列表，其中每个元素是 (原始_tool_call, 工具结果, 事件列表) 的元组，顺序与输入一致。
+    每个 `events` 列表包含了引擎应返回给调用者的字典事件。
     """
     from claw_agent.core.hooks import HookContext, HookEvent
     from claw_agent.core.permissions import check_permission
