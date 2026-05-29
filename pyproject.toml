@@ -9,6 +9,8 @@ dependencies = [
     "httpx>=0.27.0",
     "mcp>=1.0.0",         # Model Context Protocol
     "rich>=13.0",         # Terminal UI
+    "prompt_toolkit>=3.0.0",  # Interactive CLI input
+    "python-dotenv>=1.0.0",   # .env loading
 ]
 
 [project.optional-dependencies]

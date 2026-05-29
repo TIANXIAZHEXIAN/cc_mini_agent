@@ -30,19 +30,19 @@
 
 ## 安装
 
-需要 Python 3.11+。
+需要 `uv` 和 Python 3.11+。
 
 ```bash
 git clone https://github.com/TIANXIAZHEXIAN/cc_mini_agent.git
 cd cc_mini_agent
 
-python -m venv --prompt cc_mini_agent .venv
+uv venv .venv --python 3.11 --prompt cc_mini_agent
 source .venv/bin/activate
 
-pip install -e ".[all]" prompt_toolkit python-dotenv
+uv sync --extra all
 ```
 
-当前 CLI 入口会在运行时导入 `prompt_toolkit` 和 `python-dotenv`。上面的安装命令已经把它们包含进去，新的虚拟环境可以直接启动 REPL。
+当前文档统一使用 `uv` 完成虚拟环境创建和依赖安装。`prompt_toolkit` 和 `python-dotenv` 已经写入项目依赖，新的虚拟环境执行上面的命令后就可以直接启动 REPL。
 
 ## 配置
 

@@ -30,19 +30,19 @@ This project originated from studying, dissecting, and rebuilding Claude Code's 
 
 ## Install
 
-Python 3.11+ is required.
+`uv` and Python 3.11+ are required.
 
 ```bash
 git clone https://github.com/TIANXIAZHEXIAN/cc_mini_agent.git
 cd cc_mini_agent
 
-python -m venv --prompt cc_mini_agent .venv
+uv venv .venv --python 3.11 --prompt cc_mini_agent
 source .venv/bin/activate
 
-pip install -e ".[all]" prompt_toolkit python-dotenv
+uv sync --extra all
 ```
 
-The current CLI imports `prompt_toolkit` and `python-dotenv` at runtime. They are included in the command above so a fresh environment can start the REPL directly.
+The documentation now uses `uv` for both virtual environment creation and dependency installation. `prompt_toolkit` and `python-dotenv` are now declared in the project dependencies, so a fresh virtual environment can start the REPL directly after the command above.
 
 ## Configure
 
