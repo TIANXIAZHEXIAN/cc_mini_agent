@@ -32,7 +32,7 @@ PROVIDER_PRESETS: dict[str, dict[str, str]] = {
     "kimi":      {"base_url": "https://api.moonshot.cn/v1",        "model": "kimi-k2.5",           "env_key": "KIMI_API_KEY"},
     "moonshot":  {"base_url": "https://api.moonshot.cn/v1",        "model": "kimi-k2.5",           "env_key": "MOONSHOT_API_KEY"},
     # DeepSeek
-    "deepseek":  {"base_url": "https://api.deepseek.com",      "model": "deepseek-v4-flash",       "env_key": "DEEPSEEK_API_KEY"},
+    "deepseek":  {"base_url": "https://api.deepseek.com/v1",      "model": "deepseek-chat",       "env_key": "DEEPSEEK_API_KEY"},
     # Qwen (Alibaba)
     "qwen":      {"base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1", "model": "qwen-plus", "env_key": "QWEN_API_KEY"},
 }

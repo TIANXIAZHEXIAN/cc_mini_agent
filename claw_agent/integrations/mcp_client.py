@@ -19,6 +19,7 @@ from typing import Any, Optional
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from mcp.types import InitializeResult
 
 from claw_agent.core.tool import Tool, ToolContext, ToolRegistry, RiskLevel
 
@@ -180,10 +181,11 @@ class MCPManager:
         transport = await self._stack.enter_async_context(stdio_client(params))
         read, write = transport
         session = await self._stack.enter_async_context(ClientSession(read, write))
-        await asyncio.wait_for(session.initialize(), timeout=CONNECTION_TIMEOUT_S)
-
+        init_result = await asyncio.wait_for(session.initialize(),timeout=CONNECTION_TIMEOUT_S,)
+        # await asyncio.wait_for(session.initialize(),timeout=CONNECTION_TIMEOUT_S,)
         self._sessions[server.name] = session
-        self._extract_server_instructions(server.name, session)
+        self._extract_server_instructions(server.name, init_result)
+
         logger.info(f"Connected to MCP server via stdio: {server.name}")
         return session
 
@@ -202,10 +204,10 @@ class MCPManager:
         )
         read, write = transport
         session = await self._stack.enter_async_context(ClientSession(read, write))
-        await asyncio.wait_for(session.initialize(), timeout=CONNECTION_TIMEOUT_S)
+        init_result = await asyncio.wait_for(session.initialize(), timeout=CONNECTION_TIMEOUT_S)
 
         self._sessions[server.name] = session
-        self._extract_server_instructions(server.name, session)
+        self._extract_server_instructions(server.name, init_result)
         logger.info(f"Connected to MCP server via SSE: {server.name}")
         return session
 
@@ -224,27 +226,38 @@ class MCPManager:
         )
         read, write, _ = transport
         session = await self._stack.enter_async_context(ClientSession(read, write))
-        await asyncio.wait_for(session.initialize(), timeout=CONNECTION_TIMEOUT_S)
+        init_result = await asyncio.wait_for(session.initialize(), timeout=CONNECTION_TIMEOUT_S)
 
         self._sessions[server.name] = session
-        self._extract_server_instructions(server.name, session)
+        self._extract_server_instructions(server.name, init_result)
         logger.info(f"Connected to MCP server via HTTP: {server.name}")
         return session
 
-    def _extract_server_instructions(self, name: str, session: ClientSession) -> None:
-        """Extract and store server instructions after connection.
-        """
+    def _extract_server_instructions(
+        self,
+        name: str,
+        init_result: InitializeResult,
+    ) -> None:
+        """Extract and store server instructions after connection.在连接建立完成后，提取并存储服务器提供的指令信息。"""
+
         try:
-            server_info = getattr(session, "server_info", None)
-            raw = getattr(server_info, "instructions", None) if server_info else None
-            if raw:
-                self._server_instructions[name] = _truncate_description(raw)
-                logger.info(
-                    f"MCP server '{name}' instructions: "
-                    f"{len(raw)} chars{' (truncated)' if len(raw) > MAX_MCP_DESCRIPTION_LENGTH else ''}"
-                )
+            raw = init_result.instructions
+
+            if not raw:
+                return
+
+            self._server_instructions[name] = _truncate_description(raw)
+
+            logger.info(
+                f"MCP server '{name}' instructions: "
+                f"{len(raw)} chars"
+                f"{' (truncated)' if len(raw) > MAX_MCP_DESCRIPTION_LENGTH else ''}"
+            )
+
         except Exception as e:
-            logger.debug(f"Could not extract instructions from '{name}': {e}")
+            logger.debug(
+                f"Could not extract instructions from '{name}': {e}"
+            )
 
     async def connect_all(self, servers: list[MCPServerConfig]) -> None:
         """Connect to all configured MCP servers / 连接所有 MCP 服务器"""

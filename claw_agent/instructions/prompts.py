@@ -19,7 +19,7 @@ from claw_agent.instructions.clawmd import (
     discover_instruction_files,
     format_instructions_prompt,
 )
-
+from claw_agent.skill import Skill, discover_skills, format_skills_prompt
 
 # ────────────────────────────────────────────────────────────────
 # Section 1: Identity & Safety — getSimpleIntroSection()
@@ -148,6 +148,8 @@ class PromptBuilder:
         self.language: Optional[str] = None
         self._instruction_files: List[InstructionFile] = []
         self._instructions_prompt: Optional[str] = None
+        self._skills: List[Skill] = []
+        self._skills_prompt: Optional[str] = None
 
     def set_domain_instructions(self, extra: str) -> "PromptBuilder":
         """
@@ -182,10 +184,21 @@ class PromptBuilder:
         self._instructions_prompt = format_instructions_prompt(self._instruction_files)
         return self
 
+    def load_skills(self, cwd: Optional[str] = None) -> "PromptBuilder":
+        """Discover available SKILL.md-based skills / 发现可用的技能目录"""
+        self._skills = discover_skills(cwd=cwd or self.cwd)
+        self._skills_prompt = format_skills_prompt(self._skills)
+        return self
+
     @property
     def instruction_files(self) -> List[InstructionFile]:
         """The discovered instruction files (after load_instructions)."""
         return self._instruction_files
+
+    @property
+    def skills(self) -> List[Skill]:
+        """The discovered skills (after load_skills or build)."""
+        return self._skills
 
     def _get_env_info(self) -> str:
         """Environment injection / 环境信息注入
@@ -217,7 +230,9 @@ class PromptBuilder:
           9. Environment info
           10. Language
           11. Memory & MCP
-          12. Domain instructions
+          12. CLAW.md instructions
+          13. Skills
+          14. Domain instructions
         """
         parts = []
 
@@ -250,6 +265,12 @@ class PromptBuilder:
         # CLAW.md instructions (project / user / local)
         if self._instructions_prompt:
             parts.append(self._instructions_prompt)
+
+        # Skills metadata only; SKILL.md bodies are loaded on demand.
+        if self._skills_prompt is None:
+            self.load_skills()
+        if self._skills_prompt:
+            parts.append(self._skills_prompt)
 
         # Domain specific rules (Overrides generic behavior — highest priority)
         if self.domain_instructions:

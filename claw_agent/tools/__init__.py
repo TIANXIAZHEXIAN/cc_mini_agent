@@ -10,7 +10,7 @@ from claw_agent.tools.grep_tool import GrepTool
 from claw_agent.tools.web_fetch_tool import WebFetchTool
 from claw_agent.tools.web_search_tool import WebSearchTool
 from claw_agent.tools.ask_user_tool import AskUserQuestionTool
-
+from claw_agent.skill.tools import SkillListTool, SkillReadTool
 
 def get_default_tools():
     """Get all built-in tools / 获取所有内置工具
@@ -25,4 +25,6 @@ def get_default_tools():
         WebFetchTool(),
         WebSearchTool(),
         AskUserQuestionTool(),
+        SkillListTool(),
+        SkillReadTool(),
     ]
