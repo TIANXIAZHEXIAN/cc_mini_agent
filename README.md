@@ -1,4 +1,4 @@
-# cc_mini_agent
+# cc_mini_agent —— 一个轻量、可读、可扩展的 Python CLI Agent 框架
 
 <div align="center">
 
