@@ -1,0 +1,93 @@
+cc-mini-agent
+├── LICENSE
+├── README.md
+├── README_EN.md
+├── bocha-search-mcp
+│   ├── README.md
+│   ├── assets
+│   │   ├── alibaba-2024-esg-report.png
+│   │   └── bocha-logo-720x180.png
+│   ├── pyproject.toml
+│   ├── src
+│   │   └── bocha_search_mcp
+│   │       ├── __init__.py
+│   │       └── server.py
+│   └── uv.lock
+├── claw_agent
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── agents
+│   │   ├── __init__.py
+│   │   ├── coordinator.py
+│   │   └── sub_agent.py
+│   ├── config.py
+│   ├── core
+│   │   ├── __init__.py
+│   │   ├── engine.py
+│   │   ├── hooks.py
+│   │   ├── messages.py
+│   │   ├── permissions.py
+│   │   ├── streaming_executor.py
+│   │   └── tool.py
+│   ├── instructions
+│   │   ├── __init__.py
+│   │   ├── clawmd.py
+│   │   └── prompts.py
+│   ├── integrations
+│   │   ├── __init__.py
+│   │   └── mcp_client.py
+│   ├── memory
+│   │   ├── __init__.py
+│   │   ├── compact.py
+│   │   ├── dream.py
+│   │   ├── memory.py
+│   │   ├── session_persistence.py
+│   │   └── session_prompts.py
+│   ├── providers
+│   │   ├── __init__.py
+│   │   ├── anthropic.py
+│   │   ├── base.py
+│   │   ├── gemini.py
+│   │   ├── openai_compat.py
+│   │   ├── presets.py
+│   │   └── tokens.py
+│   ├── skill
+│   │   ├── __init__.py
+│   │   ├── loader.py
+│   │   ├── roll-dice
+│   │   │   ├── SKILL.md
+│   │   │   ├── assets
+│   │   │   ├── references
+│   │   │   └── scripts
+│   │   │       └── roll_die.py
+│   │   └── tools.py
+│   └── tools
+│       ├── __init__.py
+│       ├── ask_user_tool.py
+│       ├── bash_tool.py
+│       ├── file_tools.py
+│       ├── glob_tool.py
+│       ├── grep_tool.py
+│       ├── mcp_resources.py
+│       ├── web_fetch_tool.py
+│       └── web_search_tool.py
+├── claw_agent.egg-info
+│   ├── PKG-INFO
+│   ├── SOURCES.txt
+│   ├── dependency_links.txt
+│   ├── entry_points.txt
+│   ├── requires.txt
+│   └── top_level.txt
+├── examples
+│   ├── coordinator_example.py
+│   ├── custom_tool.py
+│   ├── mcp_example.py
+│   ├── memory_example.py
+│   ├── multi_provider.py
+│   └── simple_agent.py
+├── mcp_config.json
+├── pyproject.toml
+├── tree.txt
+└── uv.lock
+
+20 directories, 71 files

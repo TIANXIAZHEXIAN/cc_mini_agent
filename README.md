@@ -133,7 +133,7 @@ export TAVILY_API_KEY="..."     # 可选：启用网络搜索
 ### 运行 CLI
 
 ```bash
-python3 -m claw_agent                        # 自动检测供应商
+python -m claw_agent                        # 自动检测供应商
 claw --language japanese                     # 设置回复语言
 claw --provider openai --model gpt-4o        # 覆盖供应商/模型
 ```
