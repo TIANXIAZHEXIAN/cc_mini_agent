@@ -1,4 +1,4 @@
-# cc_mini_agent —— A lightweight, readable, and extensible Python CLI Agent framework.
+# CC_Mini_Agent —— A lightweight, readable, and extensible Python CLI Agent framework.
 
 <div align="center">
 
