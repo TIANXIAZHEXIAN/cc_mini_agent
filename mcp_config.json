@@ -4,7 +4,7 @@
       "command": "uv",
       "args": [
         "--directory",
-        "/home/yuan/cc-mini-agent/bocha-search-mcp",
+        "/home/yuan/cc_mini_agent/bocha-search-mcp",
         "run",
         "bocha-search-mcp"
       ]

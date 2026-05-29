@@ -4,8 +4,8 @@ Same code, different providers. Just swap the config.
 相同代码，不同 Provider。只需切换配置。
 """
 import asyncio
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
 
 
 async def run_with_provider(provider: str, api_key: str):

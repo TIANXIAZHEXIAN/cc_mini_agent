@@ -5,9 +5,9 @@ Shows how to use file-based memory injection and memory consolidation (Dream).
 """
 import asyncio
 import os
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
-from claw_agent.memory import Memory, DreamEngine, DreamConfig
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
+from cc_mini_agent.memory import Memory, DreamEngine, DreamConfig
 
 
 async def main():
@@ -15,7 +15,7 @@ async def main():
 
     # --- 1. Initialize Memory ---
     # Create persistent memory in current local directory
-    mem_dir = os.path.join(os.getcwd(), ".claw_memory")
+    mem_dir = os.path.join(os.getcwd(), ".cc_mini_agent_memory")
     memory = Memory(mem_dir)
 
     print(f"Memory directory created at: {mem_dir}")

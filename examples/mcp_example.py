@@ -6,10 +6,10 @@ Connect to MCP servers and use their tools + resources in the agent.
 Supported transports: stdio (default), sse, http
 """
 import asyncio
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
-from claw_agent.integrations.mcp_client import MCPManager, MCPServerConfig
-from claw_agent.tools.mcp_resources import ListMcpResourcesTool, ReadMcpResourceTool
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
+from cc_mini_agent.integrations.mcp_client import MCPManager, MCPServerConfig
+from cc_mini_agent.tools.mcp_resources import ListMcpResourcesTool, ReadMcpResourceTool
 
 
 async def main():

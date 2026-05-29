@@ -8,9 +8,9 @@ Two usage modes demonstrated:
 将研究、实现、验证三个任务并行扇出给不同的 Worker。
 """
 import asyncio
-from claw_agent import Config
-from claw_agent.tools import get_default_tools
-from claw_agent.agents.coordinator import Coordinator, WorkerTask
+from cc_mini_agent import Config
+from cc_mini_agent.tools import get_default_tools
+from cc_mini_agent.agents.coordinator import Coordinator, WorkerTask
 
 
 async def main():
@@ -62,7 +62,7 @@ async def engine_mode():
     - send_message to continue workers with follow-up instructions
     - task_stop to cancel misdirected workers
     """
-    from claw_agent.core.engine import Engine
+    from cc_mini_agent.core.engine import Engine
 
     config = Config()
     event_queue = asyncio.Queue()

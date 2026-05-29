@@ -32,9 +32,9 @@ Thumbs.db
 
 # Agent runtime data
 .agent/
-.claw/
-CLAW.local.md
-# Runtime memory data (not the source package claw_agent/memory/)
+.cc_mini_agent/
+CC_MINI_AGENT.local.md
+# Runtime memory data (not the source package cc_mini_agent/memory/)
 /memory/
 
 # Documentation

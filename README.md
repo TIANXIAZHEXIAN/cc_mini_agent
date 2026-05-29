@@ -1,4 +1,4 @@
-# Claw Agent — 基于Python的Claude Code极简纯净学习版
+# cc_mini_agent — 基于Python的Claude Code极简纯净学习版
 
 > 现代 CLI 智能体框架，用干净可读的 Python 构建。
 
@@ -13,7 +13,7 @@
 
 ---
 
-## 为什么选择 Claw Agent？
+## 为什么选择 cc_mini_agent？
 
 大多数智能体框架要么过于玩具化、要么过度封装。本项目借鉴现代 CLI 智能体的最佳设计实践，用**可读、可扩展的 Python** 重建——每个核心模块不超过 200 行。
 
@@ -53,7 +53,7 @@
 对话接近上下文窗口限制时自动压缩历史。使用 LLM 生成摘要将海量 token 压缩为一条消息——零上下文溢出。
 
 ### 会话持久化 (Session Persistence)
-在 `~/.claw/sessions/` 维护结构化 Markdown 笔记。后台 forked 子代理自动提取关键上下文。压缩时使用会话笔记替代 LLM 生成的摘要，恢复更快、保真度更高。
+在 `~/.cc_mini_agent/sessions/` 维护结构化 Markdown 笔记。后台 forked 子代理自动提取关键上下文。压缩时使用会话笔记替代 LLM 生成的摘要，恢复更快、保真度更高。
 
 ### Auto-Dream 记忆巩固
 后台"无头引擎"定期唤醒，修剪、整理和压缩 `.md` 记忆文件——跨会话保持上下文相关且整洁。
@@ -79,20 +79,20 @@
 配置代理的回复语言——内部 prompt 和代码保持英文，仅用户可见的输出改变：
 
 ```bash
-claw --language japanese           # CLI 参数
-export CLAW_LANGUAGE=chinese       # 环境变量
+cc --language japanese           # CLI 参数
+export CC_MINI_AGENT_LANGUAGE=chinese       # 环境变量
 Config(language="spanish")         # 代码配置
 ```
 
-### CLAW.md — 项目级指令
+### CC_MINI_AGENT.md — 项目级指令
 自动发现并注入系统提示词的指令文件：
 
 | 文件 | 范围 |
 |------|------|
-| `~/.claw/CLAW.md` | 全局 |
-| `CLAW.md` / `.claw/CLAW.md` | 项目级 |
-| `.claw/rules/*.md` | 模块化规则 |
-| `CLAW.local.md` | 本地（不提交） |
+| `~/.cc_mini_agent/CC_MINI_AGENT.md` | 全局 |
+| `CC_MINI_AGENT.md` / `.cc_mini_agent/CC_MINI_AGENT.md` | 项目级 |
+| `.cc_mini_agent/rules/*.md` | 模块化规则 |
+| `CC_MINI_AGENT.local.md` | 本地（不提交） |
 
 支持 `@include` 引用、YAML frontmatter 和优先级排序。
 
@@ -116,8 +116,8 @@ Config(language="spanish")         # 代码配置
 ### 安装
 
 ```bash
-git clone https://github.com/leobikotech/claw-agent.git
-cd claw-agent
+git clone https://github.com/leobikotech/cc_mini_agent.git
+cd cc_mini_agent
 
 pip install -e .            # 基础（OpenAI 兼容供应商）
 pip install -e ".[all]"     # + Claude + Gemini SDK
@@ -133,17 +133,17 @@ export TAVILY_API_KEY="..."     # 可选：启用网络搜索
 ### 运行 CLI
 
 ```bash
-python -m claw_agent                        # 自动检测供应商
-claw --language japanese                     # 设置回复语言
-claw --provider openai --model gpt-4o        # 覆盖供应商/模型
+python -m cc_mini_agent                        # 自动检测供应商
+cc --language japanese                     # 设置回复语言
+cc --provider openai --model gpt-4o        # 覆盖供应商/模型
 ```
 
 ### 作为库使用
 
 ```python
 import asyncio
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
 
 async def main():
     config = Config(provider="openai", language="chinese")
@@ -160,7 +160,7 @@ asyncio.run(main())
 ### MCP 集成
 
 ```python
-from claw_agent.integrations import MCPManager, MCPServerConfig
+from cc_mini_agent.integrations import MCPManager, MCPServerConfig
 
 mcp = MCPManager()
 await mcp.connect_all([
@@ -190,10 +190,10 @@ await mcp.discover_tools_async(engine.registry)
 ## 项目结构
 
 ```
-claw_agent/
+cc_mini_agent/
 ├── core/              # 引擎循环、钩子、消息、工具基类、权限
 ├── providers/         # LLM 供应商（OpenAI、Anthropic、Gemini）
-├── instructions/      # CLAW.md 发现 + PromptBuilder
+├── instructions/      # CC_MINI_AGENT.md 发现 + PromptBuilder
 ├── memory/            # 自动压缩、会话持久化、Dream 巩固
 ├── tools/             # 内置工具（bash、文件、glob、grep、搜索、MCP 资源）
 ├── agents/            # 多代理协调器
@@ -231,7 +231,7 @@ claw_agent/
 
 | 变量 | 说明 |
 |------|------|
-| `CLAW_LANGUAGE` | 默认回复语言 |
+| `CC_MINI_AGENT_LANGUAGE` | 默认回复语言 |
 | `MINIMAX_API_KEY` | MiniMax API 密钥 |
 | `OPENAI_API_KEY` | OpenAI API 密钥 |
 | `ANTHROPIC_API_KEY` | Anthropic API 密钥 |
@@ -247,7 +247,7 @@ claw_agent/
 **新增自定义工具** — 使用 `@tool` 装饰器：
 
 ```python
-from claw_agent import tool
+from cc_mini_agent import tool
 
 @tool("db_query", description="查询内部数据库", parameters={
     "type": "object", "properties": {"sql": {"type": "string"}}
@@ -261,11 +261,11 @@ async def db_query(args, ctx):
 ## Star 历史
 
 <div align="center">
-  <a href="https://star-history.com/#leobikotech/claw-agent&Date">
+  <a href="https://star-history.com/#leobikotech/cc_mini_agent&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date" />
     </picture>
   </a>
 </div>

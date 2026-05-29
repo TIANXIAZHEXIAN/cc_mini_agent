@@ -4,8 +4,8 @@ Shows how to create tools using the @tool decorator and Tool subclass.
 展示如何用 @tool 装饰器和 Tool 子类创建自定义工具。
 """
 import asyncio
-from claw_agent import Engine, Config, Tool, tool, ToolRegistry
-from claw_agent.core.tool import ToolContext, RiskLevel
+from cc_mini_agent import Engine, Config, Tool, tool, ToolRegistry
+from cc_mini_agent.core.tool import ToolContext, RiskLevel
 
 
 # --- Method 1: @tool decorator (simplest) ---

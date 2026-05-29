@@ -1,4 +1,4 @@
-cc-mini-agent
+cc_mini_agent
 ├── LICENSE
 ├── README.md
 ├── README_EN.md
@@ -13,7 +13,7 @@ cc-mini-agent
 │   │       ├── __init__.py
 │   │       └── server.py
 │   └── uv.lock
-├── claw_agent
+├── cc_mini_agent
 │   ├── __init__.py
 │   ├── __main__.py
 │   ├── agents
@@ -31,7 +31,7 @@ cc-mini-agent
 │   │   └── tool.py
 │   ├── instructions
 │   │   ├── __init__.py
-│   │   ├── clawmd.py
+│   │   ├── cc_mini_agent_md.py
 │   │   └── prompts.py
 │   ├── integrations
 │   │   ├── __init__.py
@@ -71,7 +71,7 @@ cc-mini-agent
 │       ├── mcp_resources.py
 │       ├── web_fetch_tool.py
 │       └── web_search_tool.py
-├── claw_agent.egg-info
+├── cc_mini_agent.egg-info
 │   ├── PKG-INFO
 │   ├── SOURCES.txt
 │   ├── dependency_links.txt

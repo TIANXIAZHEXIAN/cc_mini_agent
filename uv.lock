@@ -221,7 +221,7 @@ wheels = [
 ]
 
 [[package]]
-name = "claw-agent"
+name = "cc_mini_agent"
 version = "0.2.0"
 source = { virtual = "." }
 dependencies = [

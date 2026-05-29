@@ -9,8 +9,8 @@ Just set ONE env var:
   export ANTHROPIC_API_KEY=your_key # Claude
 """
 import asyncio
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
 
 
 async def main():

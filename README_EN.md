@@ -1,4 +1,4 @@
-# Claw Agent — A Minimalist Pure-Python Learning Edition of Claude Code
+# cc_mini_agent — A Minimalist Pure-Python Learning Edition of Claude Code
 
 > A modern CLI agent framework built in clean, readable Python.
 
@@ -13,7 +13,7 @@
 
 ---
 
-## Why Claw Agent?
+## Why cc_mini_agent?
 
 Most agent frameworks are either too toy-like or over-encapsulated. This project draws on best practices from modern CLI agent design and rebuilds them as **readable, extensible Python** — every core module under 200 lines.
 
@@ -53,7 +53,7 @@ The async `Engine` orchestrates the LLM ↔ Tool loop. When background workers a
 Automatically compresses conversation history when approaching context window limits. Uses LLM-generated summaries to condense tokens into a single message — zero context overflow.
 
 ### Session Persistence
-Maintains structured markdown notes (`~/.claw/sessions/`) across conversations. A forked sub-agent extracts key context in the background. On compact, session notes replace LLM-generated summaries for faster, higher-fidelity context recovery.
+Maintains structured markdown notes (`~/.cc_mini_agent/sessions/`) across conversations. A forked sub-agent extracts key context in the background. On compact, session notes replace LLM-generated summaries for faster, higher-fidelity context recovery.
 
 ### Auto-Dream Memory Consolidation
 Background "headless engine" periodically wakes up to prune, organize, and condense `.md` memory files — keeping context relevant and clean across sessions.
@@ -79,20 +79,20 @@ Features: auto-retry with exponential backoff, server instructions injection, to
 Configure the agent's response language — internal prompts and code remain in English, only user-facing output changes:
 
 ```bash
-claw --language japanese           # CLI flag
-export CLAW_LANGUAGE=chinese       # Environment variable
+cc --language japanese           # CLI flag
+export CC_MINI_AGENT_LANGUAGE=chinese       # Environment variable
 Config(language="spanish")         # Programmatic
 ```
 
-### CLAW.md — Project-Level Instructions
+### CC_MINI_AGENT.md — Project-Level Instructions
 Auto-discovered instruction files injected into the system prompt:
 
 | File | Scope |
 |------|-------|
-| `~/.claw/CLAW.md` | Global |
-| `CLAW.md` / `.claw/CLAW.md` | Project |
-| `.claw/rules/*.md` | Modular rules |
-| `CLAW.local.md` | Local (gitignored) |
+| `~/.cc_mini_agent/CC_MINI_AGENT.md` | Global |
+| `CC_MINI_AGENT.md` / `.cc_mini_agent/CC_MINI_AGENT.md` | Project |
+| `.cc_mini_agent/rules/*.md` | Modular rules |
+| `CC_MINI_AGENT.local.md` | Local (gitignored) |
 
 Supports `@include` references, YAML frontmatter, and priority ordering.
 
@@ -116,8 +116,8 @@ Supports `@include` references, YAML frontmatter, and priority ordering.
 ### Install
 
 ```bash
-git clone https://github.com/leobikotech/claw-agent.git
-cd claw-agent
+git clone https://github.com/leobikotech/cc_mini_agent.git
+cd cc_mini_agent
 
 pip install -e .            # Base (OpenAI-compatible providers)
 pip install -e ".[all]"     # + Claude + Gemini SDKs
@@ -133,17 +133,17 @@ export TAVILY_API_KEY="..."     # Optional: enables web search
 ### Run the CLI
 
 ```bash
-python3 -m claw_agent                        # Auto-detect provider
-claw --language japanese                     # Set response language
-claw --provider openai --model gpt-4o        # Override provider/model
+python3 -m cc_mini_agent                        # Auto-detect provider
+cc --language japanese                     # Set response language
+cc --provider openai --model gpt-4o        # Override provider/model
 ```
 
 ### Use as a Library
 
 ```python
 import asyncio
-from claw_agent import Engine, Config
-from claw_agent.tools import get_default_tools
+from cc_mini_agent import Engine, Config
+from cc_mini_agent.tools import get_default_tools
 
 async def main():
     config = Config(provider="openai", language="chinese")
@@ -160,7 +160,7 @@ asyncio.run(main())
 ### MCP Integration
 
 ```python
-from claw_agent.integrations import MCPManager, MCPServerConfig
+from cc_mini_agent.integrations import MCPManager, MCPServerConfig
 
 mcp = MCPManager()
 await mcp.connect_all([
@@ -190,10 +190,10 @@ await mcp.discover_tools_async(engine.registry)
 ## Project Structure
 
 ```
-claw_agent/
+cc_mini_agent/
 ├── core/              # Engine loop, hooks, messages, tools, permissions
 ├── providers/         # LLM providers (OpenAI, Anthropic, Gemini)
-├── instructions/      # CLAW.md discovery + PromptBuilder
+├── instructions/      # CC_MINI_AGENT.md discovery + PromptBuilder
 ├── memory/            # Auto-compact, session persistence, dream consolidation
 ├── tools/             # Built-in tools (bash, file, glob, grep, search, MCP resources)
 ├── agents/            # Multi-agent coordinator
@@ -231,7 +231,7 @@ claw_agent/
 
 | Variable | Description |
 |----------|-------------|
-| `CLAW_LANGUAGE` | Default response language |
+| `CC_MINI_AGENT_LANGUAGE` | Default response language |
 | `MINIMAX_API_KEY` | MiniMax API key |
 | `OPENAI_API_KEY` | OpenAI API key |
 | `ANTHROPIC_API_KEY` | Anthropic API key |
@@ -247,7 +247,7 @@ claw_agent/
 **Add a Custom Tool** — Use the `@tool` decorator:
 
 ```python
-from claw_agent import tool
+from cc_mini_agent import tool
 
 @tool("db_query", description="Query internal DB", parameters={
     "type": "object", "properties": {"sql": {"type": "string"}}
@@ -261,11 +261,11 @@ async def db_query(args, ctx):
 ## Star History
 
 <div align="center">
-  <a href="https://star-history.com/#leobikotech/claw-agent&Date">
+  <a href="https://star-history.com/#leobikotech/cc_mini_agent&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=leobikotech/claw-agent&type=Date" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=leobikotech/cc_mini_agent&type=Date" />
     </picture>
   </a>
 </div>
